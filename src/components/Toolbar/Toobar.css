@@ -1,0 +1,38 @@
+/* .nice {
+    border: 1px solid #ffcf86;
+    padding-left: 50px;
+    padding-right: 50px;
+    background: url('/HeaderBackground.png') no-repeat 50% 50%;
+  }
+  
+  .nice:before, .nice:after {
+    display: block;
+    height: 41px;
+    margin-left: -50px;
+    margin-right: -50px;
+    font-size: 0;
+  }
+  
+  .nice:before {
+    content: url('/HeaderRibbon.png');
+    background: url('/HeaderRibbon.png') no-repeat 100% 0;
+  }
+  
+  .nice:after {
+    content: url('/HeaderBackground.png');
+    background: url('/HeaderBackground.png') no-repeat 100% 0;
+  } */
+
+  
+ /* .banner{
+    width: 652px;
+    max-width: 100%;
+    height: 153px;
+    border: 5px solid black;
+ 
+    background-image: url(`HeaderBackground.png`), url(`/HeaderRibbon.png`);
+    background-position: right top, left top, center center;
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-size: auto, contain, cover;
+    background-origin: content-box, padding-box, border-box;
+ } */

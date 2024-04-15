@@ -1,0 +1,35 @@
+{
+  "short_name": "Pilot Insider",
+  "name": "Pilot Scheduling Portal",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "pilot_logo_white.png",
+      "type": "image/png" 
+    },
+    {
+      "src": "HeaderBackground.png",
+      "type": "image/png" 
+    },
+    {
+      "src": "UserBanner.png",
+      "type": "image/png" 
+    },
+    {
+      "src": "LeftNav.png",
+      "type": "image/png" 
+    },    
+    {
+      "src": "undraw_page_not_found_su7k.svg",
+      "type": "image/svg" 
+    }        
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

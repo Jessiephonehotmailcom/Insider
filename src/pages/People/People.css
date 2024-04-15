@@ -1,0 +1,175 @@
+.h2 {
+  color: '#8a2432'
+}
+
+.model {
+  font-family: "sans-serif";
+  text-align: 'center';
+}
+
+.container {
+  font-family: arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+/* .centered {
+  position: absolute;
+  top: 40%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 30px;
+  word-wrap: normal;
+  white-space: initial;
+  word-wrap: break-word
+}
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+} */
+.bottom-right {
+  position: absolute;
+  color: white;
+  bottom: calc(0.0vw + 0.4vh);
+
+  right: 100px;
+  font-size: calc(0.8vw + 0.8vh);
+}
+
+.container1 {
+  position: relative;
+  width: 350px;
+  height: 125px;
+  background-size: cover;
+  background-size: 100% 100%;
+  color: white;
+  text-align: left;
+  line-height: 40px;
+  padding-left: calc(1.8vw + 0.2vh);
+}
+
+.text {
+  background-color: rgba(0, 0, 0, 0);
+  font-family: Verdana;
+  font-size: calc(1.0vw + 1.0vh);
+  font-weight: bold;
+  padding: calc(0.2vw + 0.2vh);
+  ;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  background-color: #FFFFFF;
+  font-size: 14px;
+  font-family: century-gothic, sans-serif;;
+}
+
+thead th {
+  color: #7A7A7A;
+  text-align: left;
+  background-color: #F9FAFC;
+}
+
+thead th,
+tbody td {
+  padding: 14px;
+  border: 0;
+  border-bottom: 1px solid #E7E7E7;
+}
+
+tbody td:first-child {
+  border-left: 4px solid transparent;
+  transition: all ease 0.3s;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+tbody tr:hover {
+  background-color: #F7F9FC;
+}
+
+tbody tr:hover td:first-child {
+  border-left-color: #0F6FDE;
+}
+
+td.status {
+  text-align: center;
+}
+
+td.status span {
+  font-size: 12px;
+  border-radius: 3px;
+  /* padding: 4px 8px; */
+}
+
+td.status span.approved {
+  color: #FFFFFF;
+  background-color: #00C455;
+}
+
+td.status span.decline {
+  color: #FFFFFF;
+  background-color: #F13426;
+}
+
+td.status span.pending {
+  color: #132D4A;
+  background-color: #EBF0F5;
+}
+
+.verticalLine {
+  border-left: 1px solid black;
+  height: 110px;
+  margin: 0 10px;
+}
+
+.horizontalLine {
+  border-bottom: 1px solid black;
+  width: 790px;
+  /* margin-bottom: 20px; */
+}
+
+.center {
+  text-align: center;
+}
+
+
+
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
