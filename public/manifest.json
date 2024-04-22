@@ -22,7 +22,11 @@
     {
       "src": "LeftNav.png",
       "type": "image/png" 
-    },    
+    },  
+    {
+      "src": "HamburgerBar.png",
+      "type": "image/png" 
+    },   
     {
       "src": "undraw_page_not_found_su7k.svg",
       "type": "image/svg" 

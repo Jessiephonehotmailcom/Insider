@@ -3,11 +3,20 @@
     {
       "route": "/api/auth/*",
       "methods": ["GET", "POST", "PUT"],
-      "allowedRoles": ["Admin", "ComplianceManagers", "ComplianceUsers"]     
+      "allowedRoles": ["admin", "complianceManagers", "complianceUsers"]     
+    },
+    {
+      "route": "/api/search/*",
+      "methods": ["GET", "POST", "PUT"],
+      "allowedRoles": ["admin", "complianceManagers", "complianceUsers"]     
     },
     {
       "route": "/Contact*",
-      "allowedRoles": ["Admin", "ComplianceManagers", "ComplianceUsers"]  
+      "allowedRoles": ["admin", "complianceManagers", "complianceUsers"]  
+    },
+    {
+      "route": "/People*",
+      "allowedRoles": ["admin", "complianceManagers", "complianceUsers"]  
     },
     {
       "route": "/login",
@@ -39,7 +48,7 @@
           "clientSecretSettingName": "AADSecret"
         },
         "login": {          
-          "scopes": ["openid"]          
+        
         }
       }
     }  

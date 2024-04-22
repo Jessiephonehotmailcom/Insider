@@ -111,7 +111,7 @@ const People = () => {
     const [NPNIdEdit, setNPNIdEdit] = useState(false);
     const handleNPNIdEdit = () => setNPNIdEdit(true);
     const handleNPNIdCancel = () => setNPNIdEdit(false);
-
+    const [NPNId, setNPNId] = useState(person?.npnId || "");
     const [viewSSN, setViewSSN] = useState(false);
     const handleAllowViewSSN = () => setViewSSN(!viewSSN);
 
@@ -119,7 +119,11 @@ const People = () => {
       /*Call Save person API endpoint*/
       setNPNIdEdit(false);
     }
-
+    // useEffect = (e) => {
+    //   // setNPNId([person.npnId]);
+    //   setNPNId((recentInput) => ({ ...recentInput, [e.target.npnId]: e.target.value }));
+    
+    // };
     return (
       <div style={{ maxWidth: "100%", paddingTop: "12px" }} sx={{ textAlign: 'left', alignItems: 'top', marginLeft: '-4%', marginTop: '10px' }}>
         {typeof (person) === 'undefined' || person === null ? (
@@ -166,12 +170,12 @@ const People = () => {
                   </td>
                   <td>
                     <table>
-                     
+
                       <tr>
                         <td>
                           <Typography variant="h6" gutterBottom>
-                          Details
-                        </Typography>
+                            Details
+                          </Typography>
                         </td>
                         <td>SSN:
                           <TextField
@@ -181,8 +185,8 @@ const People = () => {
                             variant="standard"
                             defaultValue="xxxx"
                           />
-                          </td>
-                          <td>
+                        </td>
+                        <td>
                           {person.viewSSN &&
                             <Button
                               sx={{ boxShadow: 2 }}
@@ -199,44 +203,60 @@ const People = () => {
                           }
                         </td>
                       </tr>
-                      <tr colspan="3" class="horizontalLine">
-                       
-                      </tr>
+                      {/* <tr colspan="3" class="horizontalLine">
+                        <div class="horizontalLine"></div>
+                      </tr> */}
+
+
+                      {/* <Box sx={{ display: 'flex', justifyContent: 'left' }}> */}
+                      {/* <Box sx={{ borderColor: 'none', paddingRight: '1%' }} > */}
+
+                      {NPNIdEdit ?
+                        <>
+                          <tr>
+                            <TextField
+                              InputProps={{ sx: { borderRadius: 10 } }}
+                              id="outlined-required"
+                              label="Required"
+                              // default={person.npnId}
+                              value={NPNId || ""}
+                              onChange={(event) => setNPNId(event.target.value)}
+                            />
+                            <SaveIcon onClick={() => handleNPNIdSave()}></SaveIcon>
+                          </tr>
+                          <tr>
+                            <CloseIcon onClick={handleNPNIdCancel}></CloseIcon>
+                          </tr>
+                        </>
+                        :
+                        <>
+
+                          <td>
+                            NPN ID :  {person.npnId}
+                          </td>
+                          <td>
+                            <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >
+                              <EditRoundedIcon onClick={handleNPNIdEdit} />
+                            </Box>
+                          </td>
+
+                        </>
+                      }
+                      {/* </Box> */}
+
+
+
+
+                      {/* </Box> */}
+
                       <tr>
-
-                        <Box sx={{ display: 'flex', justifyContent: 'left' }}>
-                          <Box sx={{ borderColor: 'none', paddingRight: '1%' }} >
-
-                            {NPNIdEdit ?
-                              <>
-                                <TextField
-                                  required
-                                  id="outlined-required"
-                                  label="Required"
-                                  default={person.npnId}
-
-                                />
-                                <SaveIcon onClick={() => handleNPNIdSave()}></SaveIcon>
-                                <CloseIcon onClick={handleNPNIdCancel}></CloseIcon>
-                              </>
-                              :
-                              <>
-                                NPN ID : {person.npnId}
-                                <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >
-                                  <EditRoundedIcon onClick={handleNPNIdEdit} />
-                                </Box>
-                              </>
-                            }
-                          </Box>
-                          <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >
-                            Status {person.status}
-                          </Box>
-
-
+                        <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >
+                          Status {person.status}
                         </Box>
+                      </tr> <tr>
                         <Box sx={{ display: 'flex', justifyContent: 'left' }}>
                           <Box sx={{ borderColor: 'none', paddingRight: '9%' }} >CE Credits: {person.ceCredit}</Box>
-                          <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >CE Credits: {person.availiability}</Box>
+                          <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >CE Availability: {person.availability}</Box>
                         </Box>
 
                       </tr>
@@ -343,7 +363,7 @@ const People = () => {
                         </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'left' }}>
                           <Box sx={{ borderColor: 'none', paddingRight: '9%' }} >CE Credits: {person.ceCredit}</Box>
-                          <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >CE Credits: {person.availiability}</Box>
+                          <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >CE Credits: {person.availability}</Box>
                         </Box>
                       </Box>
                     </Grid>

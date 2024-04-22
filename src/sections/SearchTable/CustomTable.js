@@ -1,7 +1,7 @@
 import useTheme from '@mui/system/useTheme';
 import React, { useState, useEffect, forwardRef, useRef, useImperativeHandle } from "react";
 import useMediaQuery from '@mui/material/useMediaQuery';
-
+import { FORM_MODES } from "../../helpers/Constants";
 import './Table.css';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
@@ -35,7 +35,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useHistory } from 'react-router-dom';
 
 const useSortableData = (items, config = null) => {
-    const [sortConfig, setSortConfig] = React.useState(config);
+    const [sortConfig, setSortConfig] = useState(config);
 
     const sortedItems = React.useMemo(() => {
         let sortableItems = [...items];
@@ -71,12 +71,13 @@ const useSortableData = (items, config = null) => {
     return { items: sortedItems, requestSort, sortConfig };
 };
 
-export default function CustomTable({ data, columns, sortableColumns, pageSize }) {
-    var arr = [data?.licenses?.data];
+export default function CustomTable({ data, columns, sortableColumns, pageSize, routing, tabData }) {
+    //  var arr = [data?.licenses?.data];
+    var arr = [tabData];
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-    const goToAddEditLicenses = (mode, licenseId = null) => {
-        history.push({ pathname: '/AddEditLicenses', state: { id: licenseId, mode: mode } });
+    const handleEdit = (mode, licenseId = null) => {
+        history.push({ pathname: routing, state: { id: licenseId, mode: mode } });
     };
     const { items, requestSort, sortConfig } = useSortableData(arr);
     const getClassNamesFor = (name) => {
@@ -86,6 +87,9 @@ export default function CustomTable({ data, columns, sortableColumns, pageSize }
 
         return sortConfig.key === name ? sortConfig.direction : undefined;
     };
+    const keys1 = Object.keys(typeof (items[0]) === 'undefined' || items[0] === null ? "" : items[0].$values[0] ?? "") ?? null;
+
+
 
     return (
         <body>
@@ -104,44 +108,52 @@ export default function CustomTable({ data, columns, sortableColumns, pageSize }
                                             >{value.label}</button></th>
                                     );
                                 })}
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
+
                             {typeof (items[0]) === 'undefined' || items[0] === null ? (
                                 <>
-                                    <div>
-                                        <Alert severity="info" sx={{ fontSize: "15px" }}>
-                                            No record was found.
-                                        </Alert>
-                                    </div>
+                                    <tr>
+                                        <td colspan={ columns.length + 1 }>
+                                            <Alert severity="info" sx={{ fontSize: "15px", columnSpan: 'all' }}>
+                                                No record was found.
+                                            </Alert>
+
+                                        </td>
+                                    </tr>
                                 </>
                             )
                                 :
                                 (
                                     <>
-                                        {items[0].$values.map((value) => {
-                                            return (
-                                                <tr key={value.id}>
-                                                    <td data-name="licenseNumber">{value.licenseNumber}</td>
-                                                    <td data-name="state">{value.state}</td>
-                                                    <td data-name="licenseType">{value.licenseType}</td>
-                                                    <td data-name="status">{value.status}</td>
-                                                    <td data-name="status"><EditIcon sx={{ "&:hover": { color: "blue" } }} onClick={() => goToAddEditLicenses('edit', value.licenseNumber)}></EditIcon></td>
-                                                </tr>
-                                            );
-                                        })}
+                                        {items[0].$values.map((item, index) => (
+                                            <tr key={index}>
+                                                {keys1.map((key, innerIndex) => (
+                                                    (innerIndex > 1 &&
+                                                        <>
+                                                            <td key={key}>{item[key]}</td>
+                                                        </>
+                                                    )
+                                                ))}
+                                                <td data-name="status"><EditIcon sx={{ "&:hover": { color: "blue" } }} onClick={() => handleEdit(FORM_MODES.edit)}></EditIcon></td>
+                                            </tr>
+                                        ))}
+
                                     </>
                                 )
                             }
                         </tbody>
                     </table>
+
                     <div id="wrapper">
                         <div id="left-column">
-                            <AddBoxOutlinedIcon onClick={() => goToAddEditLicenses('add')} />
+                            <AddBoxOutlinedIcon onClick={() => handleEdit(FORM_MODES.add)} />
                         </div>
                         <div id="right-column">
                             <Button variant="contained">Active/Pending Licenses: {data.activePendingLicenses}</Button>
-                            
+
                         </div>
                     </div>
                 </div>

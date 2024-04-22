@@ -70,7 +70,8 @@ export default function SearchBar() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setPeople(null);
-    fetch(`api/Auth/GetPeopleSearch?searchParams=${searchInput}`)
+    // console.log(`/api/Search/GetSearchResult?searchQuery=${searchInput}`);
+    fetch(`/api/Search/GetSearchResult?searchQuery=${searchInput}`)
       .then(response => response.json())
       .then(data => {
         //console.log(data);

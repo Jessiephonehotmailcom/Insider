@@ -140,7 +140,7 @@ const peopleModel = {
   npnId: 0,
   ceCredit: "",
   status: "",
-  availiability: "",
+  availability: "",
   ActivePendingLicenses: 0,
   checkFlag: "",
   viewSSN: false,

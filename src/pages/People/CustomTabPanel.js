@@ -5,12 +5,9 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CustomTable from '../../sections/SearchTable/CustomTable';
-let licensesTabHeader = [
-    { id: 'licenseNumber', label: 'License Number', alignRight: false },
-    { id: 'state', label: 'State', alignRight: false },
-    { id: 'licenseType', label: 'License Type', alignRight: false },
-    { id: 'status', label: 'Status', alignRight: false },
-];
+import { LICENSES_TAB_HEADER, CERTIFICATIONS_TAB_HEADER, DEPLOYMENT_TAB_HEADER, RIRS_ACTIONS_TAB_HEADER, NOTES_TAB_HEADER } from "../../helpers/Constants";
+
+
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -47,8 +44,8 @@ function a11yProps(index) {
 
 export default function BasicTabs(props) {
     const [value, setValue] = React.useState(0);
-    console.log("pxxxxxxxxxxxxxxxxxx" + props.licenses?.data?.$values[0]?.licenseNumber)
-    
+    // console.log("pxxxxxxxxxxxxxxxxxx" + props.licenses?.data?.$values[0]?.licenseNumber)
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -67,19 +64,19 @@ export default function BasicTabs(props) {
             </Box>
             <CustomTabPanel value={value} index={0}>
                 {/* <Licenses props={value} /> */}
-                <CustomTable data={props} columns={licensesTabHeader} sortableColumns={['licenseNumber', 'state']} pageSize={5} />
+                <CustomTable data={props} columns={LICENSES_TAB_HEADER} sortableColumns={['licenseNumber', 'state']} pageSize={5} routing="/AddEditLicenses" tabData={props?.licenses?.data} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Certifications
+                <CustomTable data={props} columns={CERTIFICATIONS_TAB_HEADER} sortableColumns={['certificationName', 'dateCompleted', 'dateExpired']} pageSize={5} routing="/AddEditCertifications" tabData={props?.certifications?.data} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-                Deployments
+                <CustomTable data={props} columns={DEPLOYMENT_TAB_HEADER} sortableColumns={['deploymentId', 'deploymentState', 'dateArrived', 'dateReleased', 'compliant']} pageSize={5} routing="/AddEditDeployments" tabData={props?.deployments?.data} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
-                RIRS Actions
+                <CustomTable data={props} columns={RIRS_ACTIONS_TAB_HEADER} sortableColumns={['state', 'reason', 'penalty', 'actionDate', 'effectiveDate']} pageSize={5} routing="/AddEditRIRActions" tabData={props?.rirActions?.data} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={4}>
-                Notes
+                <CustomTable data={props} columns={NOTES_TAB_HEADER} sortableColumns={['state', 'reason', 'penalty', 'actionDate', 'effectiveDate']} pageSize={5} routing="/AddEditRIRActions" tabData={props?.rirActions?.data} />
             </CustomTabPanel>
         </Box>
     );

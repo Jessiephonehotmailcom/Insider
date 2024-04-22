@@ -17,7 +17,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
-
+import Paper from '@mui/material/Paper';
 
 import ContactsIcon from '@mui/icons-material/Contacts';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
@@ -35,6 +35,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchBar from '../Header/SearchBar';
 import Fade from '@mui/material/Fade';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CloseIcon from '@mui/icons-material/Close';
 import { left } from '@popperjs/core';
 const PREFIX = 'MyCard';
 const classes = {
@@ -51,7 +52,7 @@ const classes = {
 const Root = styled('div')(({ theme }) => ({
   [`&.${classes.root}`]: {
     display: 'flex',
-    
+
   },
   [`&.${classes.menuItem}`]: {
     display: 'flex',
@@ -134,6 +135,7 @@ const closedMixin = (theme) => ({
 const ContentArea = styled('div')(({ theme, open }) => ({
   marginTop: "100px",
   flexGrow: 1,
+  width: '80vw',
   display: 'flex',
   justifyContent: 'center',
   padding: theme.spacing(2),
@@ -260,7 +262,13 @@ export default function Layout(props) {
       window.removeEventListener('resize', handleWindowSizeChange);
     };
   }, []);
-
+  const Item = styled(Paper)(({ theme }) => ({
+    // backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    // ...theme.typography.body2,
+    // padding: theme.spacing(1),
+    // textAlign: 'center',
+    // color: theme.palette.text.secondary,
+  }));
   let isMobile = width <= 768;
   return (
     <>
@@ -295,7 +303,6 @@ export default function Layout(props) {
 
               }}
             >
-
               <Toolbar className={classes.toolbarLeft}>
                 <IconButton
                   size="large"
@@ -305,7 +312,7 @@ export default function Layout(props) {
                   sx={{ mr: 2 }}
                   onClick={drawerOpen ? handleDrawerClose : setdrawerOpen}
                 >
-                  <MenuIcon sx={{ mr: 1 }} style={{ marginTop: '30px' }}></MenuIcon>
+                  <img src="/HamburgerBar.png" style={{ width: '30%', height: '30%', marginTop: '30px' }}></img>
                 </IconButton>
                 <SearchBar ></SearchBar>
                 {/* <IconButton
@@ -461,181 +468,195 @@ export default function Layout(props) {
               }}
 
               variant="permanent" open={drawerOpen}>
-              <DrawerHeader style={{ marginTop: '80px' }}>
-             
-                <IconButton
-                  color="inherit"
-                  aria-label="account menu"
-                  aria-controls="account-menu"
-                  aria-haspopup="true"
-                  onClick={handleClick}
-                  edge="end"
-                  marginRight="130px"
-
-                >
-                  
-                  {isAuthenticated &&
-                    <>
-                      <AccountCircleIcon style={{ width: "65px", height: "65px", color: "#FFFFFF", marginLeft:'-10px' }} />
-
-
-                    </>
-                  }
-                </IconButton>
-                <div style={{ color: "#FFFFFF", marginLeft:'10px',   inlineSize: '140px',   overflowWrap: 'break-word', whiteSpace:'wrap'}}>   
-                Hello, Bartholomew Montgomery
-              </div>
-              {/* <IconButton onClick={drawerOpen ? handleDrawerClose : setdrawerOpen} style={{ width: '0%', marginRight: '50%', paddingTop: 80 }}>
+              <DrawerHeader style={{ marginTop: '50px' }}>
+                <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={0}>
+                  <Box gridColumn="span 8">
+                  </Box>
+                  <Box gridColumn="span 4">
+                    <CloseIcon
+                      style={{
+                        color: 'white',
+                      }}
+                      edge="end"
+                      marginRight="0px"
+                      onClick={handleDrawerClose}
+                    >
+                    </CloseIcon>
+                  </Box>
+                  <Box gridColumn="span 4">
+                    <IconButton
+                      color="inherit"
+                      aria-label="account menu"
+                      aria-controls="account-menu"
+                      aria-haspopup="true"
+                      onClick={handleClick}
+                      edge="end"
+                      marginRight="130px"
+                    >
+                      {isAuthenticated &&
+                        <>
+                          <AccountCircleIcon style={{ width: "65px", height: "65px", color: "#FFFFFF", marginLeft: '-10px' }} />
+                        </>
+                      }
+                    </IconButton>
+                  </Box>
+                  <Box gridColumn="span 8">
+                    <div style={{ color: "#FFFFFF", marginLeft: '10px', inlineSize: '140px', overflowWrap: 'break-word', whiteSpace: 'wrap' }}>
+                      Hello, Bartholomew Montgomery
+                    </div>
+                  </Box>
+                </Box>
+                {/* <IconButton onClick={drawerOpen ? handleDrawerClose : setdrawerOpen} style={{ width: '0%', marginRight: '50%', paddingTop: 80 }}>
                 {drawerOpen ? <KeyboardArrowLeftIcon /> : <KeyboardArrowRightIcon />}
               </IconButton> */}
-            </DrawerHeader>
+              </DrawerHeader>
 
-            <Divider sx={{ bgcolor: "#FFFFFF", width: '80%', marginLeft: '10%' }} />
+              <Divider sx={{ bgcolor: "#FFFFFF", width: '80%', marginLeft: '10%' }} />
 
-            {/* {roles !== null && ( */}
-            <List>
-              {/*{roles.some(x => x === "Admin") && (*/}
-              <ListItem component={Link} to="/Administration" style={{ textDecoration: 'none', color: "#FFFFFF" }}>
-                <ListItemBtn
-                  selected={selected === 0}
-                  onClick={() => setSelected(0)}
+              {/* {roles !== null && ( */}
+              <List>
+                {/*{roles.some(x => x === "Admin") && (*/}
+                <ListItem component={Link} to="/Administration" style={{ textDecoration: 'none', color: "#FFFFFF" }}>
+                  <ListItemBtn
+                    selected={selected === 0}
+                    onClick={() => setSelected(0)}
 
-                // sx={{
-                //   "&.Mui-selected": {
-                //     backgroundColor: "#50555B",
-                //     borderColor: "#696D74",
-                //     boxShadow: 3,
-                //     borderRadius: 3,
-                //   },
-                //   "&.Mui-focusVisible": {
-                //     backgroundColor: "#50555B",
-                //     borderColor: "#696D74",
-                //     boxShadow: 3,
-                //     borderRadius: 3,
-                //   },
-                //   ":hover": {
-                //     backgroundColor: "#686C74",
-                //     borderColor: "#696D74",
-                //     boxShadow: 3,
-                //     borderRadius: 3,
-                //   },
-                // }}
-                >
-                  <ListItemIcon style={{ color: "#FFFFFF" }}><AdminPanelSettingsIcon /></ListItemIcon>
-                  <ListItemText primary="Administration" style={{ color: "#FFFFFF" }} />
-                </ListItemBtn>
-              </ListItem>
+                  // sx={{
+                  //   "&.Mui-selected": {
+                  //     backgroundColor: "#50555B",
+                  //     borderColor: "#696D74",
+                  //     boxShadow: 3,
+                  //     borderRadius: 3,
+                  //   },
+                  //   "&.Mui-focusVisible": {
+                  //     backgroundColor: "#50555B",
+                  //     borderColor: "#696D74",
+                  //     boxShadow: 3,
+                  //     borderRadius: 3,
+                  //   },
+                  //   ":hover": {
+                  //     backgroundColor: "#686C74",
+                  //     borderColor: "#696D74",
+                  //     boxShadow: 3,
+                  //     borderRadius: 3,
+                  //   },
+                  // }}
+                  >
+                    <ListItemIcon style={{ color: "#FFFFFF" }}><AdminPanelSettingsIcon /></ListItemIcon>
+                    <ListItemText primary="Administration" style={{ color: "#FFFFFF" }} />
+                  </ListItemBtn>
+                </ListItem>
+                {/* )} */}
+                {/*{roles.some(x => x === "Admin") && (*/}
+                <ListItem component={Link} to="/People" style={{ textDecoration: 'none', color: "#FFFFFF" }}>
+                  <ListItemButton
+                    selected={selected === 1}
+                    onClick={() => setSelected(1)}
+                    sx={{
+                      "&.Mui-selected": {
+                        backgroundColor: "#50555B",
+                        borderColor: "#696D74",
+                        boxShadow: 3,
+                        borderRadius: 3,
+                      },
+                      "&.Mui-focusVisible": {
+                        backgroundColor: "#50555B",
+                        borderColor: "#696D74",
+                        boxShadow: 3,
+                        borderRadius: 3,
+                      },
+                      ":hover": {
+                        backgroundColor: "#686C74",
+                        borderColor: "#696D74",
+                        boxShadow: 3,
+                        borderRadius: 3,
+                      },
+                    }}>
+                    <ListItemIcon style={{ color: "#FFFFFF" }}><ContactsIcon /></ListItemIcon>
+                    <ListItemText primary="People" style={{ color: "#FFFFFF" }} />
+                  </ListItemButton>
+                </ListItem>
+                {/* )} */}
+                {/* {roles.some(x => x === "Adjuster") && ( */}
+
+                <ListItem component={Link} to="/ImportFile" style={{ textDecoration: 'none', color: '#000000DE' }}>
+                  <ListItemButton
+                    selected={selected === 2}
+                    onClick={() => setSelected(2)}
+                    sx={{
+                      "&.Mui-selected": {
+                        backgroundColor: "#50555B",
+                        borderColor: "#696D74",
+                        boxShadow: 3,
+                        borderRadius: 3,
+                        color: 'black'
+                      },
+                      "&.Mui-focusVisible": {
+                        backgroundColor: "#50555B",
+                        borderColor: "#696D74",
+                        boxShadow: 3,
+                        borderRadius: 3,
+                      },
+                      ":hover": {
+                        backgroundColor: "#686C74",
+                        borderColor: "#696D74",
+                        boxShadow: 3,
+                        borderRadius: 3,
+                      },
+                    }}>
+                    <ListItemIcon style={{ color: "#FFFFFF" }}><UploadIcon /></ListItemIcon>
+                    <ListItemText primary="Import File" style={{ color: "#FFFFFF" }} />
+                  </ListItemButton>
+                </ListItem>
+                {/* )} */}
+                {/*{roles.some(x => x === "Admin") && (*/}
+                <ListItem component={Link} to="/NCR" style={{ textDecoration: 'none', color: '#000000DE' }}>
+                  <ListItemButton
+                    selected={selected === 3}
+                    onClick={() => setSelected(3)}
+                    sx={{
+                      "&.Mui-selected": {
+                        backgroundColor: "#50555B",
+                        borderColor: "#696D74",
+                        boxShadow: 3,
+                        borderRadius: 3,
+                      },
+                      "&.Mui-focusVisible": {
+                        backgroundColor: "#50555B",
+                        borderColor: "#696D74",
+                        boxShadow: 3,
+                        borderRadius: 3,
+                      },
+                      ":hover": {
+                        backgroundColor: "#686C74",
+                        borderColor: "#696D74",
+                        boxShadow: 3,
+                        borderRadius: 3,
+                      },
+                    }}>
+                    <ListItemIcon style={{ color: "#FFFFFF" }}><AddBoxIcon /></ListItemIcon>
+                    <ListItemText primary="NCR" style={{ color: "#FFFFFF" }} />
+                  </ListItemButton>
+                </ListItem>
+                {/* )} */}
+
+              </List>
               {/* )} */}
-              {/*{roles.some(x => x === "Admin") && (*/}
-              <ListItem component={Link} to="/People" style={{ textDecoration: 'none', color: "#FFFFFF" }}>
-                <ListItemButton
-                  selected={selected === 1}
-                  onClick={() => setSelected(1)}
-                  sx={{
-                    "&.Mui-selected": {
-                      backgroundColor: "#50555B",
-                      borderColor: "#696D74",
-                      boxShadow: 3,
-                      borderRadius: 3,
-                    },
-                    "&.Mui-focusVisible": {
-                      backgroundColor: "#50555B",
-                      borderColor: "#696D74",
-                      boxShadow: 3,
-                      borderRadius: 3,
-                    },
-                    ":hover": {
-                      backgroundColor: "#686C74",
-                      borderColor: "#696D74",
-                      boxShadow: 3,
-                      borderRadius: 3,
-                    },
-                  }}>
-                  <ListItemIcon style={{ color: "#FFFFFF" }}><ContactsIcon /></ListItemIcon>
-                  <ListItemText primary="People" style={{ color: "#FFFFFF" }} />
-                </ListItemButton>
-              </ListItem>
-              {/* )} */}
-              {/* {roles.some(x => x === "Adjuster") && ( */}
+            </Drawer>
+            {isMobile ? (
+              <ContentArea open={drawerOpen}>
+                {props.children}
+              </ContentArea>
+            ) : (
 
-              <ListItem component={Link} to="/ImportFile" style={{ textDecoration: 'none', color: '#000000DE' }}>
-                <ListItemButton
-                  selected={selected === 2}
-                  onClick={() => setSelected(2)}
-                  sx={{
-                    "&.Mui-selected": {
-                      backgroundColor: "#50555B",
-                      borderColor: "#696D74",
-                      boxShadow: 3,
-                      borderRadius: 3,
-                      color: 'black'
-                    },
-                    "&.Mui-focusVisible": {
-                      backgroundColor: "#50555B",
-                      borderColor: "#696D74",
-                      boxShadow: 3,
-                      borderRadius: 3,
-                    },
-                    ":hover": {
-                      backgroundColor: "#686C74",
-                      borderColor: "#696D74",
-                      boxShadow: 3,
-                      borderRadius: 3,
-                    },
-                  }}>
-                  <ListItemIcon style={{ color: "#FFFFFF" }}><UploadIcon /></ListItemIcon>
-                  <ListItemText primary="Import File" style={{ color: "#FFFFFF" }} />
-                </ListItemButton>
-              </ListItem>
-              {/* )} */}
-              {/*{roles.some(x => x === "Admin") && (*/}
-              <ListItem component={Link} to="/NCR" style={{ textDecoration: 'none', color: '#000000DE' }}>
-                <ListItemButton
-                  selected={selected === 3}
-                  onClick={() => setSelected(3)}
-                  sx={{
-                    "&.Mui-selected": {
-                      backgroundColor: "#50555B",
-                      borderColor: "#696D74",
-                      boxShadow: 3,
-                      borderRadius: 3,
-                    },
-                    "&.Mui-focusVisible": {
-                      backgroundColor: "#50555B",
-                      borderColor: "#696D74",
-                      boxShadow: 3,
-                      borderRadius: 3,
-                    },
-                    ":hover": {
-                      backgroundColor: "#686C74",
-                      borderColor: "#696D74",
-                      boxShadow: 3,
-                      borderRadius: 3,
-                    },
-                  }}>
-                  <ListItemIcon style={{ color: "#FFFFFF" }}><AddBoxIcon /></ListItemIcon>
-                  <ListItemText primary="NCR" style={{ color: "#FFFFFF" }} />
-                </ListItemButton>
-              </ListItem>
-              {/* )} */}
+              <ContentArea open={drawerOpen}>
+                {props.children}
+              </ContentArea>
+            )}
+          </Root>
+        </Box>
 
-            </List>
-            {/* )} */}
-          </Drawer>
-          {isMobile ? (
-            <ContentArea open={drawerOpen}>
-              {props.children}
-            </ContentArea>
-          ) : (
-
-            <ContentArea open={drawerOpen}>
-              {props.children}
-            </ContentArea>
-          )}
-        </Root>
-      </Box>
-
-    </div >
+      </div >
       <div>
         <Footer />
       </div>
