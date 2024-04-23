@@ -79,6 +79,7 @@ const People = () => {
   const queryClient = new QueryClient();
   const setPeople = useStoreActions(actions => actions.people.setPeople);
   const [loading, setLoading] = useState(true);
+
   const commonStyles = {
     bgcolor: 'background.paper',
     border: 1,
@@ -115,15 +116,33 @@ const People = () => {
     const [viewSSN, setViewSSN] = useState(false);
     const handleAllowViewSSN = () => setViewSSN(!viewSSN);
 
-    const handleNPNIdSave = () => {
+    const handleNPNIdSave = async () => {
       /*Call Save person API endpoint*/
-      setNPNIdEdit(false);
+      await fetch(`/api/Person/UpdateNPNNumber?npn=${NPNId}&id=${person.pilotId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(updatedData),
+        }
+      )
+        .then(response => response.json())
+        .then(data => {
+          setNPNId(NPNId);
+
+        })
+        .catch(error => console.error('Error updating NPNId:', error));
+        setNPNIdEdit(false);
     }
-    // useEffect = (e) => {
-    //   // setNPNId([person.npnId]);
-    //   setNPNId((recentInput) => ({ ...recentInput, [e.target.npnId]: e.target.value }));
+
+
+  
     
-    // };
+    // useEffect(() => {
+    //   setNPNId(NPNId);
+    // }, [handleNPNIdCancel]);
+    
     return (
       <div style={{ maxWidth: "100%", paddingTop: "12px" }} sx={{ textAlign: 'left', alignItems: 'top', marginLeft: '-4%', marginTop: '10px' }}>
         {typeof (person) === 'undefined' || person === null ? (
@@ -232,7 +251,7 @@ const People = () => {
                         <>
 
                           <td>
-                            NPN ID :  {person.npnId}
+                            NPN ID :  {NPNId}
                           </td>
                           <td>
                             <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >
@@ -268,110 +287,6 @@ const People = () => {
               <div style={{ paddingTop: '25px' }}></div>
               <BasicTabs {...person} />
 
-              {/* <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={0} >                  
-                  <Grid container spacing={3}>
-                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                      <div class="container1" style={{ backgroundImage: `url("/UserBanner.png")` }}>
-                        <div class="text">{person.firstName} {person.lastName}</div>
-                        <div class="bottom-right">{person.pilotId} </div>
-                      </div>
-                    </Grid>
-                    <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
-                      <Typography variant="h5">
-                        <CheckIcon style={{ position: "relative", top: "39px", textDecorationThickness: "120px", color: "green", fontWeight: "bold" }} />
-                        <div style={{ fontWeight: "bold", color: '#8a2432', position: "relative", left: "5%", alignItems: 'center' }}>                          
-                          <FormGrid item xs={12}>
-                            <FormLabel htmlFor="email">
-                              {person.email}
-                            </FormLabel>
-                            <FormGrid item xs={12}>
-                              <FormLabel htmlFor="phone">
-                                {person.phoneNumber}
-                              </FormLabel>
-                            </FormGrid>
-                            <FormGrid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                              <FormLabel htmlFor="address">
-                                {person.address}
-                              </FormLabel>
-                            </FormGrid>
-                          </FormGrid>
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={2} sm={2} md={2} lg={2} xl={2}>
-                      <Divider orientation="vertical" sx={{ width: '50%', borderRightColor: '#FFFFF', borderRightWidth: 2 }} style={{ borderRightWidth: 2, color: 'black' }} />
-                    </Grid>
-                    <Grid item xs={2} sm={2} md={3} lg={3} xl={3}>
-                      <Box sx={{ pt: 2, position: "relative", left: "40px" }}>
-                        <Typography variant="h6" gutterBottom>
-                          Details
-                        </Typography>
-                        <Divider orientation="horizontal" sx={{ width: '50%', borderRightColor: '#FFFFF', borderRightWidth: 2 }} style={{ borderRightWidth: 2, color: 'black' }} />
-                        <Box sx={{ display: 'flex', justifyContent: 'left' }}>
-                          <Box sx={{ borderColor: 'none', paddingRight: '1%' }} >
-
-                            {NPNIdEdit ?
-                              <>
-                                <TextField
-                                  required
-                                  id="outlined-required"
-                                  label="Required"
-                                  default={person.npnId}
-
-                                />
-                                <SaveIcon onClick={() => handleNPNIdSave()}></SaveIcon>
-                                <CloseIcon onClick={handleNPNIdCancel}></CloseIcon>
-                              </>
-                              :
-                              <>
-                                NPN ID : {person.npnId}
-                                <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >
-                                  <EditRoundedIcon onClick={handleNPNIdEdit} />
-                                </Box>
-                              </>
-                            }
-                          </Box>
-                          <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >
-                            Status {person.status}
-                          </Box>
-
-                          <Box sx={{ borderColor: 'none' }} style={{ position: "relative", bottom: "10px", textDecorationThickness: "120px", fontWeight: "bold" }} >
-                            SSN:
-                            <TextField
-                              disabled
-                              id="outlined-disabled"
-                              value={viewSSN && person.ssn || 'XXXX-XXX-XXXX'}
-                              variant="standard"
-                              defaultValue="xxxx"
-                            />
-                            {person.viewSSN &&
-                              <Button
-                                sx={{ boxShadow: 2 }}
-                                style={{
-                                  borderRadius: 35,
-                                  backgroundColor: "#32688E",
-                                  padding: "8px 16px",
-                                  fontSize: "12px"
-                                }}
-                                variant="contained"
-                                onClick={handleAllowViewSSN}>
-                                {!viewSSN ? 'View SSN' : 'Hide SSN'}
-                              </Button>
-                            }
-                          </Box>
-                        </Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'left' }}>
-                          <Box sx={{ borderColor: 'none', paddingRight: '9%' }} >CE Credits: {person.ceCredit}</Box>
-                          <Box sx={{ borderColor: 'none', paddingRight: '3%' }} >CE Credits: {person.availability}</Box>
-                        </Box>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Box>
-              <div style={{ paddingTop: '25px' }}></div>
-              <BasicTabs {...person} /> */}
             </div>
           )
         }

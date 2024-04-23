@@ -230,21 +230,15 @@ export default function Layout(props) {
 
 
   const handleClose = (ev) => {
-    // setAnchorEl(null);
+
+    setAnchorEl(null);
     // localStorage.setItem('pilotId', null);
     // const pilotId = localStorage.getItem('pilotId');
     // console.log('PilotId :::::::::::: ' + pilotId);
-    // if (ev.target.innerText === 'Logout') {
-    //   if (window.location.host === 'witty-rock-05985bd10.3.azurestaticapps.net') {
-    //     window.location.replace('https://pilotdev.onelogin.com/oidc/2/logout')
-    //   }
-    //   else if (window.location.host === 'photos.pilottest.cc') {
-    //     window.location.replace('https://pilotstaging.onelogin.com/oidc/2/logout')
-    //   }
-    //   else if (window.location.host === 'photos.pilotcat.com') {
-    //     window.location.replace('https://pilot.onelogin.com/oidc/2/logout')
-    //   }
-    // }
+    if (ev.target.innerText === 'Logout') {
+      // window.location.replace(`/.auth/logout`)      
+      window.location.replace('https://login.windows.net/fc16c45f-83c5-424c-bfcc-5ccaa08a8fcb/oauth2/logout')
+    }
   }
 
 
@@ -276,13 +270,6 @@ export default function Layout(props) {
         <Box sx={{ display: 'flex' }}>
           <CssBaseline />
           {/* <Header isAuthenticated="true" /> */}
-
-
-
-
-
-
-
           <Root className={classes.root}>
             <AppBar
               position="fixed"
@@ -359,29 +346,29 @@ export default function Layout(props) {
               onClose={handleClose}
               PaperProps={{
                 elevation: 0,
-                sx: {
-                  overflow: 'visible',
-                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                  mt: 1.5,
-                  '& .MuiAvatar-root': {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0,
-                  },
-                },
+                // sx: {
+                //   overflow: 'visible',
+                //   filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                //   mt: 1.5,
+                //   '& .MuiAvatar-root': {
+                //     width: 32,
+                //     height: 32,
+                //     ml: -0.5,
+                //     mr: 1,
+                //   },
+                //   '&:before': {
+                //     content: '""',
+                //     display: 'block',
+                //     position: 'absolute',
+                //     top: 0,
+                //     right: 14,
+                //     width: 10,
+                //     height: 10,
+                //     bgcolor: 'background.paper',
+                //     transform: 'translateY(-50%) rotate(45deg)',
+                //     zIndex: 0,
+                //   },
+                // },
               }}
               TransitionComponent={Fade}
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}

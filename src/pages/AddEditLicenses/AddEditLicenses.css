@@ -4,6 +4,7 @@
     overflow: hidden;
     background: "#fffaf7";
     border: 1px solid #cccccc;
+    padding-left: 10px;
 }
 
 .selectBox {
@@ -66,6 +67,7 @@
     height: 5px;
     border: solid white;
     border-width: 1px 1px 1px 1px;
+  
 }
 
 .inputRounded .MuiOutlinedInput-root {

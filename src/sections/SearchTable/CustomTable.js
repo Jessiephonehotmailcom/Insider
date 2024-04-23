@@ -137,7 +137,7 @@ export default function CustomTable({ data, columns, sortableColumns, pageSize, 
                                                         </>
                                                     )
                                                 ))}
-                                                <td data-name="status"><EditIcon sx={{ "&:hover": { color: "blue" } }} onClick={() => handleEdit(FORM_MODES.edit)}></EditIcon></td>
+                                                <td data-name="status"><EditIcon sx={{ "&:hover": { color: "blue" } }} onClick={() => handleEdit(FORM_MODES.edit, item.id)}></EditIcon></td>
                                             </tr>
                                         ))}
 

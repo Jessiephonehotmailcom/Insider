@@ -35,6 +35,9 @@ export const RIRS_ACTIONS_TAB_HEADER = [
 export const NOTES_TAB_HEADER = [
     { id: 'state', label: 'State', alignRight: false },
     { id: 'category', label: 'Category', alignRight: false },
-    { id: 'note', label: 'Note', alignRight: false },    
+    { id: 'content', label: 'Content', alignRight: false },    
+    { id: 'createdDate', label: 'Created Date', alignRight: false },  
+    { id: 'updateDate', label: 'Updated Date', alignRight: false },  
+    
 ];
 
