@@ -124,7 +124,6 @@ const People = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(updatedData),
         }
       )
         .then(response => response.json())
@@ -133,16 +132,9 @@ const People = () => {
 
         })
         .catch(error => console.error('Error updating NPNId:', error));
-        setNPNIdEdit(false);
+      setNPNIdEdit(false);
     }
 
-
-  
-    
-    // useEffect(() => {
-    //   setNPNId(NPNId);
-    // }, [handleNPNIdCancel]);
-    
     return (
       <div style={{ maxWidth: "100%", paddingTop: "12px" }} sx={{ textAlign: 'left', alignItems: 'top', marginLeft: '-4%', marginTop: '10px' }}>
         {typeof (person) === 'undefined' || person === null ? (

@@ -1,34 +1,68 @@
-{  
+{
   "routes": [
     {
       "route": "/api/auth/*",
-      "methods": ["GET", "POST", "PUT"],
-      "allowedRoles": ["admin", "complianceManagers", "complianceUsers"]     
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ],
+      "allowedRoles": [
+        "Admin",
+        "complianceManagers",
+        "complianceUsers"
+      ]
     },
     {
       "route": "/api/search/*",
-      "methods": ["GET", "POST", "PUT"],
-      "allowedRoles": ["admin", "complianceManagers", "complianceUsers"]     
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ],
+      "allowedRoles": [
+        "Admin",
+        "complianceManagers",
+        "complianceUsers"
+      ]
     },
     {
       "route": "/Contact*",
-      "allowedRoles": ["admin", "complianceManagers", "complianceUsers"]  
+      "allowedRoles": [
+        "Admin",
+        "complianceManagers",
+        "complianceUsers"
+      ]
     },
     {
       "route": "/People*",
-      "allowedRoles": ["admin", "complianceManagers", "complianceUsers"]  
+      "allowedRoles": [
+        "Admin",
+        "complianceManagers",
+        "complianceUsers"
+      ]
     },
     {
       "route": "/login",
       "redirect": "/.auth/login/aad",
-      "allowedRoles": ["authenticated"]
-    }  
-    ,
+      "allowedRoles": [
+        "authenticated"
+      ]
+    },
     {
       "route": "/logout",
       "redirect": "/.auth/logout?post_logout_redirect_uri=.auth/login/aad",
-      "allowedRoles": ["anonymous", "authenticated"]
-    }  
+      "allowedRoles": [
+        "anonymous",
+        "authenticated"
+      ]
+    },
+    {
+      "route": "/*",
+      "allowedRoles": [
+        "authenticated"
+      ]
+    }
   ],
   "responseOverrides": {
     "401": {
@@ -41,16 +75,17 @@
   },
   "auth": {
     "identityProviders": {
-      "azureActiveDirectory": { 
+      "azureActiveDirectory": {
         "registration": {
           "openIdIssuer": "https://login.microsoftonline.com/fc16c45f-83c5-424c-bfcc-5ccaa08a8fcb/v2.0",
           "clientIdSettingName": "AADClientID",
           "clientSecretSettingName": "AADSecret"
         },
-        "login": {          
-        
-        }
+        "login": {}
       }
-    }  
+    }
   }
 }
+
+
+

@@ -33,7 +33,7 @@ import {
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import { useHistory } from 'react-router-dom';
-
+import { ReturnFullDateTimeOrString } from '../../helpers/Common';
 const useSortableData = (items, config = null) => {
     const [sortConfig, setSortConfig] = useState(config);
 
@@ -76,8 +76,8 @@ export default function CustomTable({ data, columns, sortableColumns, pageSize, 
     var arr = [tabData];
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-    const handleEdit = (mode, licenseId = null) => {
-        history.push({ pathname: routing, state: { id: licenseId, mode: mode } });
+    const handleEdit = (mode, id) => {
+        history.push({ pathname: routing, state: { id: id, mode: mode } });
     };
     const { items, requestSort, sortConfig } = useSortableData(arr);
     const getClassNamesFor = (name) => {
@@ -116,7 +116,7 @@ export default function CustomTable({ data, columns, sortableColumns, pageSize, 
                             {typeof (items[0]) === 'undefined' || items[0] === null ? (
                                 <>
                                     <tr>
-                                        <td colspan={ columns.length + 1 }>
+                                        <td colspan={columns.length + 1}>
                                             <Alert severity="info" sx={{ fontSize: "15px", columnSpan: 'all' }}>
                                                 No record was found.
                                             </Alert>
@@ -133,7 +133,7 @@ export default function CustomTable({ data, columns, sortableColumns, pageSize, 
                                                 {keys1.map((key, innerIndex) => (
                                                     (innerIndex > 1 &&
                                                         <>
-                                                            <td key={key}>{item[key]}</td>
+                                                            <td key={key}>{ReturnFullDateTimeOrString(item[key])}</td>
                                                         </>
                                                     )
                                                 ))}
@@ -149,7 +149,7 @@ export default function CustomTable({ data, columns, sortableColumns, pageSize, 
 
                     <div id="wrapper">
                         <div id="left-column">
-                            <AddBoxOutlinedIcon onClick={() => handleEdit(FORM_MODES.add)} />
+                            <AddBoxOutlinedIcon onClick={() => handleEdit(FORM_MODES.add, data.id)} />
                         </div>
                         <div id="right-column">
                             <Button variant="contained">Active/Pending Licenses: {data.activePendingLicenses}</Button>

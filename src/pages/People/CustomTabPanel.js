@@ -76,7 +76,7 @@ export default function BasicTabs(props) {
                 <CustomTable data={props} columns={RIRS_ACTIONS_TAB_HEADER} sortableColumns={['state', 'reason', 'penalty', 'actionDate', 'effectiveDate']} pageSize={5} routing="/AddEditRIRActions" tabData={props?.rirActions?.data} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={4}>
-                <CustomTable data={props} columns={NOTES_TAB_HEADER} sortableColumns={['state', 'reason', 'penalty', 'actionDate', 'effectiveDate']} pageSize={5} routing="/AddEditRIRActions" tabData={props?.rirActions?.data} />
+                <CustomTable data={props} columns={NOTES_TAB_HEADER} sortableColumns={['state', 'reason', 'penalty', 'actionDate', 'effectiveDate']} pageSize={5} routing="/AddEditNotes" tabData={props?.personeNotes?.data} />
             </CustomTabPanel>
         </Box>
     );

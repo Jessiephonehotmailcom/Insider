@@ -5,6 +5,8 @@
     background: "#fffaf7";
     border: 1px solid #cccccc;
     padding-left: 10px;
+    height: 40px;
+    font-size: 12;
 }
 
 .selectBox {

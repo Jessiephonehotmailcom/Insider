@@ -7,6 +7,7 @@ import Toolbar from "../components/Toolbar/Toolbar";
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import Page404 from '../components/Layout/Page404';
 import AddEditLicenses from '../pages/AddEditLicenses/AddEditLicenses';
+import AddEditNotes from '../pages/AddEditNotes/AddEditNotes';
 
 import SearchBox from "../components/Header/SearchBar";
 import { StoreProvider } from 'easy-peasy';
@@ -52,24 +53,25 @@ function Routes() {
   }
   else {
     //console.log('ROUTE PAGE::::::::PilotId :::::::::::: ' + pilotId)
-    return (      
-        <Route>
-          {/* <Toolbar> */}
-          <Layout>
-            <Switch>
-              <Route exact path="/">
-              </Route>
-              {/* <Rout?Se path={['/SearchPa?Sge']} component={SearchBox} />         */}
-              <Route exact path="/People" render={(props) => { return <People {...props} />; }}></Route>
-              <Route exact path="/AddEditLicenses" render={(props) => { return <AddEditLicenses {...props} />; }}></Route>
-              <Route path='/ImportFile' component={ImportFile} />              
-              <Route path='/logout' />
-              {/* <Route path='/People' component={People} /> */}
-              <Route path="*" component={Page404} />
-            </Switch>
-            </Layout>
-          {/* </Toolbar> */}
-        </Route>            
+    return (
+      <Route>
+        {/* <Toolbar> */}
+        <Layout>
+          <Switch>
+            <Route exact path="/">
+            </Route>
+            {/* <Rout?Se path={['/SearchPa?Sge']} component={SearchBox} />         */}
+            <Route exact path="/People" render={(props) => { return <People {...props} />; }}></Route>
+            <Route exact path="/AddEditLicenses" render={(props) => { return <AddEditLicenses {...props} />; }}></Route>
+            <Route exact path="/AddEditNotes" render={(props) => { return <AddEditNotes {...props} />; }}></Route>
+            <Route path='/ImportFile' component={ImportFile} />
+            <Route path='/logout' />
+            {/* <Route path='/People' component={People} /> */}
+            <Route path="*" component={Page404} />
+          </Switch>
+        </Layout>
+        {/* </Toolbar> */}
+      </Route>
     );
   }
 }
