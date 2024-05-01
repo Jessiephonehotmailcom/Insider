@@ -7,7 +7,6 @@ import Handyman from "@mui/icons-material/Handyman";
 import Logout from "@mui/icons-material/Logout";
 import Summarize from "@mui/icons-material/Summarize";
 import UploadFile from "@mui/icons-material/UploadFile";
-import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -24,6 +23,7 @@ import { styled } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Header from "../Header/Header";
 import Search from "../Header/Search";
 
 const menuItems = [
@@ -71,24 +71,6 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  height: "160px",
-}));
-
-const MobileAppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme }) => ({
-  zIndex: theme.zIndex.drawer - 1,
-  height: "100px",
-}));
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -158,6 +140,7 @@ export default function Layout({ children }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const isMobile = useMediaQuery("(max-width:768px)");
+  const isDesktop = !isMobile;
 
   const openAccountMenu = Boolean(anchorEl);
   const handleAccountClick = (event) => {
@@ -177,93 +160,13 @@ export default function Layout({ children }) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      {!isMobile && (
-        <AppBar
-          position="fixed"
-          open={open}
-          sx={{
-            backgroundImage: `url("/HeaderRibbon.png")`,
-            backgroundSize: "cover",
-            backgroundPosition: "right bottom",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "24px 72px",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "12px",
-                alignItems: "center",
-              }}
-            >
-              <Button
-                sx={{ width: "32px" }}
-                onClick={open ? handleDrawerClose : handleDrawerOpen}
-              >
-                <img
-                  src="/HamburgerBar.png"
-                  alt="Hamburger Bar"
-                  style={{
-                    width: "70%",
-                  }}
-                />
-              </Button>
-              <Search />
-            </Box>
-            <Box>
-              <img src="/pilot_logo_white.png" alt="Pilot Logo" />
-            </Box>
-          </Box>
-        </AppBar>
-      )}
+      <Header
+        open={open}
+        handleDrawerOpen={handleDrawerOpen}
+        handleDrawerClose={handleDrawerClose}
+      />
 
-      {isMobile && (
-        <MobileAppBar
-          position="fixed"
-          open={open}
-          sx={{
-            backgroundImage: `url("/HeaderRibbon.png")`,
-            backgroundSize: "cover",
-            backgroundPosition: "right bottom",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "space-between",
-              paddingLeft: "16px",
-              paddingRight: "16px",
-            }}
-          >
-            <Button
-              sx={{ width: "32px" }}
-              onClick={open ? handleDrawerClose : handleDrawerOpen}
-            >
-              <img
-                src="/HamburgerBar.png"
-                alt="Hamburger Bar"
-                style={{
-                  width: "70%",
-                }}
-              />
-            </Button>
-            <img src="/pilot_logo_white.png" alt="Pilot Logo" />
-            <Box sx={{ width: "64px" }} />
-          </Box>
-        </MobileAppBar>
-      )}
-
-      {!isMobile && (
+      {isDesktop && (
         <Drawer
           variant="permanent"
           open={open}
