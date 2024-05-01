@@ -152,6 +152,13 @@ export default function Drawer({ open, handleDrawerClose }) {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    handleAccountClose();
+    window.location.replace(
+      "https://login.windows.net/fc16c45f-83c5-424c-bfcc-5ccaa08a8fcb/oauth2/logout"
+    );
+  };
+
   return (
     <>
       {isDesktop && (
@@ -218,7 +225,7 @@ export default function Drawer({ open, handleDrawerClose }) {
                       "aria-labelledby": "basic-button",
                     }}
                   >
-                    <MuiMenuItem onClick={handleAccountClose}>
+                    <MuiMenuItem onClick={handleLogout}>
                       <ListItemIcon>
                         <Logout fontSize="small" />
                       </ListItemIcon>
@@ -304,6 +311,22 @@ export default function Drawer({ open, handleDrawerClose }) {
                 }}
               />
             </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={openAccountMenu}
+              onClose={handleAccountClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MuiMenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Logout
+              </MuiMenuItem>
+            </Menu>
             <Typography color="white">Hello, Bruce Banner</Typography>
           </Box>
           <Box
