@@ -113,7 +113,7 @@ export default function CustomTable({
   tabData,
 }) {
   const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("calories");
+  const [orderBy, setOrderBy] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pageSize);
   const rows = tabData?.$values ?? [];

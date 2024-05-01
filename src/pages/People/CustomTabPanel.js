@@ -106,7 +106,15 @@ export default function BasicTabs(props) {
           />
         )}
 
-        {isMobile && <CustomCard />}
+        {isMobile && (
+          <CustomCard
+            data={props}
+            columns={LICENSES_TAB_HEADER}
+            pageSize={5}
+            routing="/AddEditLicenses"
+            tabData={props?.licenses?.data}
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         {isDesktop && (

@@ -1,30 +1,33 @@
 /** @format */
 
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { AddCircleOutline } from "@mui/icons-material";
+import { Box, Button, Divider, Grid, Typography } from "@mui/material";
+import { useMemo, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { FORM_MODES } from "../helpers/Constants";
 
-function createData(id, licenseNumber, state, licenseType, status) {
-  return {
-    id,
-    licenseNumber,
-    state,
-    licenseType,
-    status,
+const CustomCard = ({ data, columns, pageSize, routing, tabData }) => {
+  const [page, setPage] = useState(0);
+  const rows = tabData?.$values ?? [];
+  const history = useHistory();
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
-}
 
-const rows = [
-  createData(1, 7423949, "FL", "Adjuster License", "Pending"),
-  createData(2, 7423949, "TX", "Adjuster License", "Active"),
-  createData(3, 7423949, "AL", "Adjuster License", "Pending"),
-  createData(4, 7423949, "NY", "Adjuster License", "Expired"),
-  createData(5, 7423949, "IL", "Adjuster License", "Pending"),
-  createData(6, 7423949, "NV", "Adjuster License", "Pending"),
-];
+  const handleEdit = (mode, id) => {
+    history.push({ pathname: routing, state: { id: id, mode: mode } });
+  };
 
-const CustomCard = () => {
+  const visibleRows = useMemo(
+    () => rows.slice(page * pageSize, page * pageSize + pageSize),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [page, pageSize]
+  );
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-      {rows.map((row) => (
+      {visibleRows.map((row) => (
         <Box
           key={row.id}
           sx={{
@@ -32,26 +35,55 @@ const CustomCard = () => {
             padding: "12px",
             borderRadius: "12px",
           }}
+          onClick={() => handleEdit(FORM_MODES.edit, row.id)}
         >
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Typography variant="h4">{row.licenseNumber}</Typography>
-          </Box>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h7">{row.state}</Typography>
-            <Typography variant="h7">{row.licenseType}</Typography>
-            <Typography variant="h7">{row.status}</Typography>
-          </Box>
+          <Grid container spacing={2}>
+            {columns.map((column, index) => (
+              <Grid item xs={6} key={index}>
+                <Typography variant="h7">{row[`${column.id}`]}</Typography>
+              </Grid>
+            ))}
+          </Grid>
         </Box>
       ))}
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Button variant="contained" sx={{ backgroundColor: "#335d81" }}>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "#335d81" }}
+          onClick={() => handleChangePage(null, page - 1)}
+          disabled={page === 0}
+        >
           Prev
         </Button>
-        <Button variant="contained" sx={{ backgroundColor: "#335d81" }}>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "#335d81" }}
+          onClick={() => handleChangePage(null, page + 1)}
+          disabled={visibleRows.length < pageSize}
+        >
           Next
         </Button>
       </Box>
       <Divider />
+      <Box
+        sx={{
+          marginTop: "16px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingX: "12px",
+        }}
+      >
+        <Button
+          sx={{ color: "black", width: "32px", minWidth: "0px" }}
+          onClick={() => handleEdit(FORM_MODES.add, data.id)}
+        >
+          <AddCircleOutline fontSize="large" />
+        </Button>
+        <Typography>
+          Active/Pending License: {data.activePendingLicenses}
+        </Typography>
+      </Box>
     </Box>
   );
 };
