@@ -9,6 +9,8 @@ import { Helmet } from "react-helmet-async";
 import BasicTabs from "./CustomTabPanel";
 import HeaderInfo from "./HeaderInfo";
 
+// import { mockPerson } from "../../helpers/Mock";
+
 export default function PeoplePage() {
   const isMobile = useMediaQuery("(max-width:768px)");
   const queryClient = new QueryClient();
@@ -18,95 +20,6 @@ export default function PeoplePage() {
   const [person, setPerson] = useState(null);
   const noData = typeof person === "undefined" || person === null;
 
-  // TODO: remove this
-  const mockPerson = {
-    pilotId: 123456,
-    firstName: "Bruce",
-    lastName: "Wayne",
-    email: "mail@mail.com",
-    phone: "555-555-5555",
-    address: "1234 Wayne Manor",
-    ssn: "123-45-6789",
-    npnId: 123456,
-    viewSSN: true,
-    status: "Active",
-    ceCredits: "1/2",
-    availability: "Deployed",
-    activePendingLicenses: 5,
-    licenses: {
-      data: {
-        $values: [
-          {
-            id: 1,
-            licenseNumber: "7423949",
-            state: "FL",
-            licenseType: "Adjuster License",
-            status: "Pending",
-          },
-          {
-            id: 2,
-            licenseNumber: "7423949",
-            state: "TX",
-            licenseType: "Adjuster License",
-            status: "Active",
-          },
-          {
-            id: 3,
-            licenseNumber: "7423949",
-            state: "TX",
-            licenseType: "Adjuster License",
-            status: "Pending",
-          },
-          {
-            id: 4,
-            licenseNumber: "7423949",
-            state: "TX",
-            licenseType: "Adjuster License",
-            status: "Pending",
-          },
-          {
-            id: 5,
-            licenseNumber: "7423949",
-            state: "TX",
-            licenseType: "Adjuster License",
-            status: "Pending",
-          },
-          {
-            id: 6,
-            licenseNumber: "7423949",
-            state: "TX",
-            licenseType: "Adjuster License",
-            status: "Pending",
-          },
-        ],
-      },
-    },
-    certifications: {
-      data: {
-        $values: [
-          {
-            id: 1,
-            certificationName: "Certification 1",
-            dateCompleted: "2021-10-01",
-            dateExpired: "2022-10-01",
-          },
-          {
-            id: 2,
-            certificationName: "Certification 2",
-            dateCompleted: "2021-10-01",
-            dateExpired: "2022-10-01",
-          },
-          {
-            id: 3,
-            certificationName: "Certification 3",
-            dateCompleted: "2021-10-01",
-            dateExpired: "2022-10-01",
-          },
-        ],
-      },
-    },
-  };
-
   useEffect(() => {
     try {
       getPeople({ accessToken: "test" }).then((result) => {
@@ -114,8 +27,7 @@ export default function PeoplePage() {
           setLoading(false);
         } else {
           setPerson(result);
-          // TODO: remove this
-          setPerson(mockPerson);
+          // setPerson(mockPerson);
           setLoading(false);
         }
       });
@@ -123,6 +35,7 @@ export default function PeoplePage() {
       alert("fail");
       setLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [people]);
 
   return (

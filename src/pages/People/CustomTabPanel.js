@@ -159,6 +159,16 @@ export default function BasicTabs(props) {
             tabData={props?.deployments?.data}
           />
         )}
+
+        {isMobile && (
+          <CustomCard
+            data={props}
+            columns={DEPLOYMENT_TAB_HEADER}
+            pageSize={5}
+            routing="/AddEditDeployments"
+            tabData={props?.deployments?.data}
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         {isDesktop && (
@@ -172,6 +182,16 @@ export default function BasicTabs(props) {
               "actionDate",
               "effectiveDate",
             ]}
+            pageSize={5}
+            routing="/AddEditRIRActions"
+            tabData={props?.rirActions?.data}
+          />
+        )}
+
+        {isMobile && (
+          <CustomCard
+            data={props}
+            columns={RIRS_ACTIONS_TAB_HEADER}
             pageSize={5}
             routing="/AddEditRIRActions"
             tabData={props?.rirActions?.data}
@@ -191,8 +211,18 @@ export default function BasicTabs(props) {
               "effectiveDate",
             ]}
             pageSize={5}
-            routing="/AddEditRIRActions"
-            tabData={props?.rirActions?.data}
+            routing="/AddEditNotes"
+            tabData={props?.personeNotes?.data}
+          />
+        )}
+
+        {isMobile && (
+          <CustomCard
+            data={props}
+            columns={NOTES_TAB_HEADER}
+            pageSize={5}
+            routing="/AddEditNotes"
+            tabData={props?.personeNotes?.data}
           />
         )}
       </CustomTabPanel>
