@@ -1,38 +1,25 @@
 /** @format */
 
-import { Edit } from "@mui/icons-material";
-import { Button, Typography } from "@mui/material";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
+import { AddCircleOutline, Edit } from "@mui/icons-material";
+import {
+  Alert,
+  Box,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Typography,
+} from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import * as React from "react";
-
-function createData(id, licenseNumber, state, licenseType, status) {
-  return {
-    id,
-    licenseNumber,
-    state,
-    licenseType,
-    status,
-  };
-}
-
-const rows = [
-  createData(1, 7423949, "FL", "Adjuster License", "Pending"),
-  createData(2, 7423949, "TX", "Adjuster License", "Active"),
-  createData(3, 7423949, "AL", "Adjuster License", "Pending"),
-  createData(4, 7423949, "NY", "Adjuster License", "Expired"),
-  createData(5, 7423949, "IL", "Adjuster License", "Pending"),
-  createData(6, 7423949, "NV", "Adjuster License", "Pending"),
-];
+import { useMemo, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { FORM_MODES } from "../../helpers/Constants";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -66,36 +53,8 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-  {
-    id: "licenseNumber",
-    disablePadding: true,
-    label: "License Number",
-  },
-  {
-    id: "state",
-    disablePadding: true,
-    label: "State",
-  },
-  {
-    id: "licenseType",
-    disablePadding: true,
-    label: "License Type",
-  },
-  {
-    id: "status",
-    disablePadding: true,
-    label: "Status",
-  },
-  {
-    id: "action",
-    disablePadding: true,
-    label: "Action",
-  },
-];
-
 function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
+  const { order, orderBy, onRequestSort, columns, sortableColumns } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -103,59 +62,67 @@ function EnhancedTableHead(props) {
   return (
     <TableHead sx={{ backgroundColor: "#9d9c9c", padding: "1px" }}>
       <TableRow>
-        {headCells.map((headCell) => (
+        {columns.map((column) => (
           <TableCell
-            key={headCell.id}
+            key={column.id}
             align="right"
-            padding="none"
-            sortDirection={orderBy === headCell.id ? order : false}
+            sortDirection={orderBy === column.id ? order : false}
             sx={{
-              paddingRight: "12px",
-              paddingLeft: "12px",
-              paddingTop: "4px",
-              paddingBottom: "4px",
               border: "1px solid gray",
             }}
           >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
+            {sortableColumns.includes(column.id) ? (
+              <TableSortLabel
+                active={orderBy === column.id}
+                direction={orderBy === column.id ? order : "asc"}
+                onClick={createSortHandler(column.id)}
+              >
+                {column.label}
+                {orderBy === column.id ? (
+                  <Box component="span" sx={visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            ) : (
+              <Typography fontSize="14px">{column.label}</Typography>
+            )}
           </TableCell>
         ))}
+        <TableCell
+          align="right"
+          sx={{
+            border: "1px solid gray",
+          }}
+        >
+          <Typography fontSize="14px">Actions</Typography>
+        </TableCell>
       </TableRow>
     </TableHead>
   );
 }
 
-export default function CustomTable() {
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+export default function CustomTable({
+  data,
+  columns,
+  sortableColumns,
+  pageSize,
+  routing,
+  tabData,
+}) {
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("calories");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(pageSize);
+  const rows = tabData?.$values ?? [];
+  const history = useHistory();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -167,18 +134,21 @@ export default function CustomTable() {
     setPage(0);
   };
 
-  const isSelected = (id) => selected.indexOf(id) !== -1;
+  const handleEdit = (mode, id) => {
+    history.push({ pathname: routing, state: { id: id, mode: mode } });
+  };
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = React.useMemo(
+  const visibleRows = useMemo(
     () =>
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [order, orderBy, page, rowsPerPage]
   );
 
@@ -192,87 +162,103 @@ export default function CustomTable() {
             size="medium"
           >
             <EnhancedTableHead
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              columns={columns}
+              sortableColumns={sortableColumns}
             />
             <TableBody>
-              {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <TableRow
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
-                    sx={{
-                      cursor: "pointer",
-                      backgroundColor: index % 2 ? "#d8d8d8" : "#f0f0f0",
-                    }}
-                  >
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      align="right"
-                      sx={{
-                        border: "1px solid gray",
-                      }}
-                    >
-                      <Typography fontSize="20px">
-                        {row.licenseNumber}
-                      </Typography>
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{
-                        border: "1px solid gray",
-                      }}
-                    >
-                      <Typography fontSize="20px">{row.state}</Typography>
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{
-                        border: "1px solid gray",
-                      }}
-                    >
-                      <Typography fontSize="20px">{row.licenseType}</Typography>
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{
-                        border: "1px solid gray",
-                      }}
-                    >
-                      <Typography fontSize="20px">{row.status}</Typography>
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{
-                        border: "1px solid gray",
-                      }}
-                    >
-                      <Button sx={{ color: "black" }}>
-                        <Edit />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
+              {rows.length === 0 ? (
                 <TableRow
-                  style={{
-                    height: 53 * emptyRows,
+                  tabIndex={-1}
+                  sx={{
+                    cursor: "pointer",
+                    backgroundColor: "#f0f0f0",
                   }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={columns.length + 1}>
+                    <Alert severity="info" sx={{ fontSize: "15px" }}>
+                      No record was found.
+                    </Alert>
+                  </TableCell>
                 </TableRow>
+              ) : (
+                <>
+                  {visibleRows.map((item, index) => {
+                    return (
+                      <TableRow
+                        tabIndex={-1}
+                        key={item.id}
+                        sx={{
+                          cursor: "pointer",
+                          backgroundColor: index % 2 ? "#d8d8d8" : "#f0f0f0",
+                        }}
+                      >
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          align="right"
+                          sx={{
+                            border: "1px solid gray",
+                          }}
+                        >
+                          <Typography fontSize="20px">
+                            {item.licenseNumber}
+                          </Typography>
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          sx={{
+                            border: "1px solid gray",
+                          }}
+                        >
+                          <Typography fontSize="20px">{item.state}</Typography>
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          sx={{
+                            border: "1px solid gray",
+                          }}
+                        >
+                          <Typography fontSize="20px">
+                            {item.licenseType}
+                          </Typography>
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          sx={{
+                            border: "1px solid gray",
+                          }}
+                        >
+                          <Typography fontSize="20px">{item.status}</Typography>
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          sx={{
+                            border: "1px solid gray",
+                          }}
+                        >
+                          <Button
+                            sx={{ color: "black" }}
+                            onClick={() => handleEdit(FORM_MODES.edit, item.id)}
+                          >
+                            <Edit />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                  {emptyRows > 0 && (
+                    <TableRow
+                      style={{
+                        height: 53 * emptyRows,
+                      }}
+                    >
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </>
               )}
             </TableBody>
           </Table>
@@ -287,6 +273,26 @@ export default function CustomTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
+      <Box
+        sx={{
+          marginTop: "16px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingX: "12px",
+        }}
+      >
+        <Button
+          sx={{ color: "black", width: "32px", minWidth: "0px" }}
+          onClick={() => handleEdit(FORM_MODES.add, data.id)}
+        >
+          <AddCircleOutline fontSize="large" />
+        </Button>
+        <Typography>
+          Active/Pending License: {data.activePendingLicenses}
+        </Typography>
+      </Box>
     </Box>
   );
 }

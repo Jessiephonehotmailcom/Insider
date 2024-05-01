@@ -1,14 +1,6 @@
 /** @format */
 
-import { AddCircleOutline } from "@mui/icons-material";
-import {
-  Alert,
-  Backdrop,
-  Box,
-  Button,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Alert, Backdrop, Box, CircularProgress } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useStoreActions, useStoreState } from "easy-peasy";
@@ -40,14 +32,51 @@ export default function PeoplePage() {
     status: "Active",
     ceCredits: "1/2",
     availability: "Deployed",
+    activePendingLicenses: 5,
     licenses: {
       data: {
         $values: [
           {
-            licenseNumber: "123456",
-            state: "Alabama",
-            licenseType: "Pilot",
-            expirationDate: "12/12/2022",
+            id: 1,
+            licenseNumber: "7423949",
+            state: "FL",
+            licenseType: "Adjuster License",
+            status: "Pending",
+          },
+          {
+            id: 2,
+            licenseNumber: "7423949",
+            state: "TX",
+            licenseType: "Adjuster License",
+            status: "Active",
+          },
+          {
+            id: 3,
+            licenseNumber: "7423949",
+            state: "TX",
+            licenseType: "Adjuster License",
+            status: "Pending",
+          },
+          {
+            id: 4,
+            licenseNumber: "7423949",
+            state: "TX",
+            licenseType: "Adjuster License",
+            status: "Pending",
+          },
+          {
+            id: 5,
+            licenseNumber: "7423949",
+            state: "TX",
+            licenseType: "Adjuster License",
+            status: "Pending",
+          },
+          {
+            id: 6,
+            licenseNumber: "7423949",
+            state: "TX",
+            licenseType: "Adjuster License",
+            status: "Pending",
           },
         ],
       },
@@ -100,21 +129,6 @@ export default function PeoplePage() {
                 }}
               >
                 <BasicTabs {...person} />
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    paddingX: "12px",
-                  }}
-                >
-                  <Button
-                    sx={{ color: "black", width: "32px", minWidth: "0px" }}
-                  >
-                    <AddCircleOutline fontSize="large" />
-                  </Button>
-                  <Typography>Active/Pending License: 5</Typography>
-                </Box>
               </Box>
             </QueryClientProvider>
           </>

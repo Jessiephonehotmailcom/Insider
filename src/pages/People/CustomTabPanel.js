@@ -53,6 +53,7 @@ const StyledTabs = styled(Tabs)(() => ({
 export default function BasicTabs(props) {
   const [value, setValue] = React.useState(0);
   const isMobile = useMediaQuery("(max-width:768px)");
+  const isDesktop = !isMobile;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -94,7 +95,7 @@ export default function BasicTabs(props) {
         </StyledTabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        {!isMobile && (
+        {isDesktop && (
           <CustomTable
             data={props}
             columns={LICENSES_TAB_HEADER}
@@ -108,66 +109,74 @@ export default function BasicTabs(props) {
         {isMobile && <CustomCard />}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <CustomTable
-          data={props}
-          columns={CERTIFICATIONS_TAB_HEADER}
-          sortableColumns={[
-            "certificationName",
-            "dateCompleted",
-            "dateExpired",
-          ]}
-          pageSize={5}
-          routing="/AddEditCertifications"
-          tabData={props?.certifications?.data}
-        />
+        {isDesktop && (
+          <CustomTable
+            data={props}
+            columns={CERTIFICATIONS_TAB_HEADER}
+            sortableColumns={[
+              "certificationName",
+              "dateCompleted",
+              "dateExpired",
+            ]}
+            pageSize={5}
+            routing="/AddEditCertifications"
+            tabData={props?.certifications?.data}
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <CustomTable
-          data={props}
-          columns={DEPLOYMENT_TAB_HEADER}
-          sortableColumns={[
-            "deploymentId",
-            "deploymentState",
-            "dateArrived",
-            "dateReleased",
-            "compliant",
-          ]}
-          pageSize={5}
-          routing="/AddEditDeployments"
-          tabData={props?.deployments?.data}
-        />
+        {isDesktop && (
+          <CustomTable
+            data={props}
+            columns={DEPLOYMENT_TAB_HEADER}
+            sortableColumns={[
+              "deploymentId",
+              "deploymentState",
+              "dateArrived",
+              "dateReleased",
+              "compliant",
+            ]}
+            pageSize={5}
+            routing="/AddEditDeployments"
+            tabData={props?.deployments?.data}
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <CustomTable
-          data={props}
-          columns={RIRS_ACTIONS_TAB_HEADER}
-          sortableColumns={[
-            "state",
-            "reason",
-            "penalty",
-            "actionDate",
-            "effectiveDate",
-          ]}
-          pageSize={5}
-          routing="/AddEditRIRActions"
-          tabData={props?.rirActions?.data}
-        />
+        {isDesktop && (
+          <CustomTable
+            data={props}
+            columns={RIRS_ACTIONS_TAB_HEADER}
+            sortableColumns={[
+              "state",
+              "reason",
+              "penalty",
+              "actionDate",
+              "effectiveDate",
+            ]}
+            pageSize={5}
+            routing="/AddEditRIRActions"
+            tabData={props?.rirActions?.data}
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        <CustomTable
-          data={props}
-          columns={NOTES_TAB_HEADER}
-          sortableColumns={[
-            "state",
-            "reason",
-            "penalty",
-            "actionDate",
-            "effectiveDate",
-          ]}
-          pageSize={5}
-          routing="/AddEditRIRActions"
-          tabData={props?.rirActions?.data}
-        />
+        {isDesktop && (
+          <CustomTable
+            data={props}
+            columns={NOTES_TAB_HEADER}
+            sortableColumns={[
+              "state",
+              "reason",
+              "penalty",
+              "actionDate",
+              "effectiveDate",
+            ]}
+            pageSize={5}
+            routing="/AddEditRIRActions"
+            tabData={props?.rirActions?.data}
+          />
+        )}
       </CustomTabPanel>
     </Box>
   );
