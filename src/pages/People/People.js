@@ -81,6 +81,30 @@ export default function PeoplePage() {
         ],
       },
     },
+    certifications: {
+      data: {
+        $values: [
+          {
+            id: 1,
+            certificationName: "Certification 1",
+            dateCompleted: "2021-10-01",
+            dateExpired: "2022-10-01",
+          },
+          {
+            id: 2,
+            certificationName: "Certification 2",
+            dateCompleted: "2021-10-01",
+            dateExpired: "2022-10-01",
+          },
+          {
+            id: 3,
+            certificationName: "Certification 3",
+            dateCompleted: "2021-10-01",
+            dateExpired: "2022-10-01",
+          },
+        ],
+      },
+    },
   };
 
   useEffect(() => {

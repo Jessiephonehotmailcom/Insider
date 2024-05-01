@@ -131,6 +131,16 @@ export default function BasicTabs(props) {
             tabData={props?.certifications?.data}
           />
         )}
+
+        {isMobile && (
+          <CustomCard
+            data={props}
+            columns={CERTIFICATIONS_TAB_HEADER}
+            pageSize={5}
+            routing="/AddEditCertifications"
+            tabData={props?.certifications?.data}
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         {isDesktop && (

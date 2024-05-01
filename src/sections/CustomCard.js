@@ -1,7 +1,7 @@
 /** @format */
 
 import { AddCircleOutline } from "@mui/icons-material";
-import { Box, Button, Divider, Grid, Typography } from "@mui/material";
+import { Alert, Box, Button, Divider, Grid, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { FORM_MODES } from "../helpers/Constants";
@@ -27,20 +27,25 @@ const CustomCard = ({ data, columns, pageSize, routing, tabData }) => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-      {visibleRows.map((row) => (
+      {visibleRows.length === 0 && (
+        <Alert severity="info" sx={{ fontSize: "15px" }}>
+          No record was found.
+        </Alert>
+      )}
+      {visibleRows.map((item) => (
         <Box
-          key={row.id}
+          key={item.id}
           sx={{
             backgroundColor: "white",
             padding: "12px",
             borderRadius: "12px",
           }}
-          onClick={() => handleEdit(FORM_MODES.edit, row.id)}
+          onClick={() => handleEdit(FORM_MODES.edit, item.id)}
         >
           <Grid container spacing={2}>
             {columns.map((column, index) => (
               <Grid item xs={6} key={index}>
-                <Typography variant="h7">{row[`${column.id}`]}</Typography>
+                <Typography variant="h7">{item[`${column.id}`]}</Typography>
               </Grid>
             ))}
           </Grid>

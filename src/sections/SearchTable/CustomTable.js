@@ -195,44 +195,21 @@ export default function CustomTable({
                           backgroundColor: index % 2 ? "#d8d8d8" : "#f0f0f0",
                         }}
                       >
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          align="right"
-                          sx={{
-                            border: "1px solid gray",
-                          }}
-                        >
-                          <Typography fontSize="20px">
-                            {item.licenseNumber}
-                          </Typography>
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          sx={{
-                            border: "1px solid gray",
-                          }}
-                        >
-                          <Typography fontSize="20px">{item.state}</Typography>
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          sx={{
-                            border: "1px solid gray",
-                          }}
-                        >
-                          <Typography fontSize="20px">
-                            {item.licenseType}
-                          </Typography>
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          sx={{
-                            border: "1px solid gray",
-                          }}
-                        >
-                          <Typography fontSize="20px">{item.status}</Typography>
-                        </TableCell>
+                        {columns.map((column, index) => (
+                          <TableCell
+                            key={index}
+                            component="th"
+                            scope="row"
+                            align="right"
+                            sx={{
+                              border: "1px solid gray",
+                            }}
+                          >
+                            <Typography fontSize="20px">
+                              {item[`${column.id}`]}
+                            </Typography>
+                          </TableCell>
+                        ))}
                         <TableCell
                           align="right"
                           sx={{
