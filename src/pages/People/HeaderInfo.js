@@ -23,7 +23,6 @@ const HeaderInfo = ({ person }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -82,10 +81,10 @@ const HeaderInfo = ({ person }) => {
               }}
             >
               <Typography fontSize="36px" color="white" lineHeight="1">
-                Bruce Wayne
+                {person?.firstName} {person?.lastName}
               </Typography>
               <Typography fontSize="20px" color="white" textAlign="right">
-                90999
+                {person?.pilotId}
               </Typography>
             </Box>
             <Box
@@ -99,13 +98,13 @@ const HeaderInfo = ({ person }) => {
               }}
             >
               <Typography fontSize="18px" color="#2d2d2d">
-                bwayne@mail.com
+                {person?.email}
               </Typography>
               <Typography fontSize="18px" color="##2d2d2d">
-                (555)853-2355
+                {person?.phone}
               </Typography>
               <Typography fontSize="18px" color="##2d2d2d">
-                4892 Yosemite Dr. Mobile, AL 33424
+                {person?.address}
               </Typography>
             </Box>
           </Box>
@@ -166,10 +165,9 @@ const HeaderInfo = ({ person }) => {
             <Box sx={{ display: "flex" }}>
               <Box sx={{ flex: "2" }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <Typography>NPN ID: 123456</Typography>
+                  <Typography>NPN ID: {person?.npnId}</Typography>
                   <Edit sx={{ fontSize: "20px" }} onClick={handleClick} />
                   <Popover
-                    id={id}
                     open={open}
                     anchorEl={anchorEl}
                     onClose={handleClose}
@@ -206,11 +204,17 @@ const HeaderInfo = ({ person }) => {
                 </Box>
               </Box>
 
-              <Typography sx={{ flex: "3" }}>CE Credits: 1/2</Typography>
+              <Typography sx={{ flex: "3" }}>
+                CE Credits: {person?.ceCredits}
+              </Typography>
             </Box>
             <Box sx={{ display: "flex" }}>
-              <Typography sx={{ flex: "2" }}>Status: Active</Typography>
-              <Typography sx={{ flex: "3" }}>Availability: Deployed</Typography>
+              <Typography sx={{ flex: "2" }}>
+                Status: {person?.status}
+              </Typography>
+              <Typography sx={{ flex: "3" }}>
+                Availability: {person?.availability}
+              </Typography>
             </Box>
           </Box>
         </Box>
@@ -238,10 +242,10 @@ const HeaderInfo = ({ person }) => {
                 }}
               >
                 <Typography fontSize="24px" color="white" lineHeight="1">
-                  Bruce Wayne
+                  {person?.firstName} {person?.lastName}
                 </Typography>
                 <Typography fontSize="18px" color="white" textAlign="right">
-                  90999
+                  {person?.pilotId}
                 </Typography>
               </Box>
             </AccordionSummary>
@@ -255,13 +259,13 @@ const HeaderInfo = ({ person }) => {
                 }}
               >
                 <Typography fontSize="14px" color="#2d2d2d">
-                  bwayne@mail.com
+                  {person?.email}
                 </Typography>
                 <Typography fontSize="14px" color="##2d2d2d">
-                  (555)853-2355
+                  {person?.phone}
                 </Typography>
                 <Typography fontSize="14px" color="##2d2d2d">
-                  4892 Yosemite Dr. Mobile, AL 33424
+                  {person?.address}
                 </Typography>
               </Box>
               <Divider sx={{ marginTop: "8px", marginBottom: "8px" }} />
@@ -293,11 +297,10 @@ const HeaderInfo = ({ person }) => {
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
                   <Typography fontSize="14px" color="#2d2d2d">
-                    NPN ID: 123456
+                    NPN ID: {person?.npnId}
                   </Typography>
                   <Edit sx={{ fontSize: "16px" }} onClick={handleClick} />
                   <Popover
-                    id={id}
                     open={open}
                     anchorEl={anchorEl}
                     onClose={handleClose}
@@ -333,13 +336,13 @@ const HeaderInfo = ({ person }) => {
                   </Popover>
                 </Box>
                 <Typography fontSize="14px" color="##2d2d2d">
-                  CE Credits: 1/2
+                  CE Credits: {person?.ceCredits}
                 </Typography>
                 <Typography fontSize="14px" color="##2d2d2d">
-                  Status: Active
+                  Status: {person?.status}
                 </Typography>
                 <Typography fontSize="14px" color="##2d2d2d">
-                  Availability: Deployed
+                  Availability: {person?.availability}
                 </Typography>
               </Box>
             </AccordionDetails>
