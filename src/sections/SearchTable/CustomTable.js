@@ -19,6 +19,7 @@ import {
 import { visuallyHidden } from "@mui/utils";
 import { useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { ReturnFullDateTimeOrString } from "../../helpers/Common";
 import { FORM_MODES } from "../../helpers/Constants";
 
 function descendingComparator(a, b, orderBy) {
@@ -191,7 +192,6 @@ export default function CustomTable({
                         tabIndex={-1}
                         key={item.id}
                         sx={{
-                          cursor: "pointer",
                           backgroundColor: index % 2 ? "#d8d8d8" : "#f0f0f0",
                         }}
                       >
@@ -206,7 +206,7 @@ export default function CustomTable({
                             }}
                           >
                             <Typography fontSize="20px">
-                              {item[`${column.id}`]}
+                              {ReturnFullDateTimeOrString(item[`${column.id}`])}
                             </Typography>
                           </TableCell>
                         ))}
