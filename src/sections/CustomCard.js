@@ -4,6 +4,7 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { Alert, Box, Button, Divider, Grid, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { ReturnFullDateTimeOrString } from "../helpers/Common";
 import { FORM_MODES } from "../helpers/Constants";
 
 const CustomCard = ({ data, columns, pageSize, routing, tabData }) => {
@@ -45,7 +46,9 @@ const CustomCard = ({ data, columns, pageSize, routing, tabData }) => {
           <Grid container spacing={2}>
             {columns.map((column, index) => (
               <Grid item xs={6} key={index}>
-                <Typography variant="h7">{item[`${column.id}`]}</Typography>
+                <Typography variant="h7">
+                  {ReturnFullDateTimeOrString(item[`${column.id}`])}
+                </Typography>
               </Grid>
             ))}
           </Grid>
