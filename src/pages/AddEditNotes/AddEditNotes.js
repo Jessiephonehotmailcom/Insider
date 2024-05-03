@@ -194,7 +194,7 @@ export default function AddEditNotes(props) {
                                                 <FormInputDropdown name="noteCategoryId"
                                                     control={control} options={allNoteCategories} register={register} errors={errors}
                                                     currentPageData={currentPageData} setCurrentPageData={setCurrentPageData}
-                                                    requiredName="noteCategoryId" requiredPhrase="Category is required!" initialValue={noteCategoryId}
+                                                    requiredName="noteCategoryId" requiredPhrase="Category is required!" initialValue={noteCategoryId||""}
                                                     optionId="id" optionName="name" unregister={unregister} clearErrors={clearErrors}
                                                     setOrgValue={setNoteCategoryId} mode={mode}
                                                 >
@@ -206,7 +206,7 @@ export default function AddEditNotes(props) {
                                             <FormInputDropdown name="stateId"
                                                 control={control} options={allStates} register={register} errors={errors}
                                                 currentPageData={currentPageData} setCurrentPageData={setCurrentPageData}
-                                                requiredName="stateId" requiredPhrase="State is required!" initialValue={stateId}
+                                                requiredName="stateId" requiredPhrase="State is required!" initialValue={stateId||""}
                                                 optionId="id" optionName="name" setError={setError} trigger={trigger} unregister={unregister} clearErrors={clearErrors}
                                                 setOrgValue={setStateId} mode={mode}
                                             >
